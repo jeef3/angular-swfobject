@@ -5,7 +5,7 @@
   "license": "MIT",
   "description": "SWFObject directive for AngularJS",
   "homepage": "https://github.com/jeef3/angular-swfobject",
-  "main": "angular-swfobject.js",
+  "main": "index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/jeef3/angular-swfobject"
@@ -13,5 +13,8 @@
   "keywords": [
     "swfobject",
     "angular"
-  ]
+  ],
+  "dependencies": {
+    "swfobject-npm": "^2.3.0-1"
+  }
 }

@@ -16,7 +16,6 @@
     "bower_components"
   ],
   "dependencies": {
-    "swfobject": "*",
-    "angular": "~1.2.6"
+    "swfobject": "*"
   }
 }
