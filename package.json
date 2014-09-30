@@ -1,11 +1,11 @@
 {
   "name": "angular-swfobject",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "author": "Jeff Knaggs",
   "license": "MIT",
   "description": "SWFObject directive for AngularJS",
   "homepage": "https://github.com/jeef3/angular-swfobject",
-  "main": "index.js",
+  "main": "angular-swfobject.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/jeef3/angular-swfobject"
