@@ -1,20 +1,17 @@
 {
   "name": "angular-swfobject",
   "version": "1.0.0",
+  "main": "angular-swfobject.js",
   "homepage": "https://github.com/jeef3/angular-swfobject",
   "authors": [
     "Jeff Knaggs <mail@jeef3.com>"
   ],
   "description": "SWFObject directive for AngularJS",
-  "main": "angular-swfobject.js",
   "keywords": [
     "swfobject",
     "angular"
   ],
   "license": "MIT",
-  "ignore": [
-    "bower_components"
-  ],
   "dependencies": {
     "swfobject": "*"
   }
