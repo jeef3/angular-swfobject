@@ -1,7 +1,5 @@
 # Angular SWFObject
 
-some
-
 ## Usage
 
 ``` html
