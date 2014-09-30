@@ -1,10 +1,9 @@
-angular.module('jeef3.swfobject', [])
-  .directive('swfObject', function ($window) {
+angular.module('swfobject', [])
+  .factory('SwfObject', ['$window', function ($window) {
+    return $window.swfobject;
+  }])
+  .directive('swfObject', ['$window', 'SwfObject', function ($window, SwfObject) {
     'use strict';
-
-    // TODO: Error if SWFObject not found
-
-    var swfobject = $window.swfobject;
 
     return {
       restrict: 'EAC',
@@ -12,8 +11,8 @@ angular.module('jeef3.swfobject', [])
         callbacks: '&swfCallbacks'
       },
 
-      link: function postLink(scope, element, attrs) {
-        swfobject.embedSWF(attrs.swfObject || attrs.src,
+      link: function link(scope, element, attrs) {
+        SwfObject.embedSWF(attrs.swfObject || attrs.src,
           element[0],
           attrs.swfWidth || 800,
           attrs.swfHeight || 600,
@@ -33,4 +32,4 @@ angular.module('jeef3.swfobject', [])
         }
       }
     };
-  });
+  }]);
