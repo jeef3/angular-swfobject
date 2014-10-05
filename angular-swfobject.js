@@ -7,23 +7,26 @@ angular.module('swfobject', [])
 
     return {
       restrict: 'EAC',
+      template: '<div ng-transclude></div>',
+      transclude: true,
       scope: {
-        callbacks: '&swfCallbacks'
+        params: '=swfParams',
+        callbacks: '=swfCallbacks'
       },
 
       link: function link(scope, element, attrs) {
-        SwfObject.embedSWF(attrs.swfObject || attrs.src,
+        SwfObject.embedSWF(attrs.swfUrl,
           element[0],
           attrs.swfWidth || 800,
           attrs.swfHeight || 600,
-          10,
+          attrs.swfVersion || '10',
           null,
           {},
           {},
-          { id: attrs.swfId });
+          scope.params || {});
 
         if (scope.callbacks) {
-          var cbs = scope.callbacks();
+          var cbs = scope.callbacks;
           var cbNames = Object.keys(cbs);
 
           cbNames.forEach(function (cbName) {
