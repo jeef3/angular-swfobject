@@ -11,6 +11,7 @@ angular.module('swfobject', [])
       transclude: true,
       scope: {
         params: '=swfParams',
+        attrs: '=swfAttrs',
         callbacks: '=swfCallbacks'
       },
 
@@ -22,8 +23,8 @@ angular.module('swfobject', [])
           attrs.swfVersion || '10',
           null,
           {},
-          {},
-          scope.params || {});
+          scope.params || {},
+          scope.attrs || {});
 
         if (scope.callbacks) {
           var cbs = scope.callbacks;
