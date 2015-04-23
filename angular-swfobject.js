@@ -12,8 +12,8 @@ angular.module('swfobject', [])
       scope: {
         params: '=swfParams',
         attrs: '=swfAttrs',
-        vars: '=?swfVars',
         callbacks: '=swfCallbacks',
+        vars: '=?swfVars',
         swfLoad: '&'
       },
 
@@ -21,19 +21,19 @@ angular.module('swfobject', [])
 
         scope.id = attrs.swfId ||
           // Random hash looking thing
-        'swf-' + Math.floor(Math.random() * 1000000000000).toString(16);
+          'swf-' + Math.floor(Math.random() * 1000000000000).toString(16);
 
         $timeout(function () {
           SwfObject.embedSWF(attrs.swfUrl,
-              scope.id,
-              attrs.swfWidth || 800,
-              attrs.swfHeight || 600,
-              attrs.swfVersion || '10',
-              null,
-              scope.vars,
-              scope.params,
-              scope.attrs,
-              embedHandler);
+            scope.id,
+            attrs.swfWidth || 800,
+            attrs.swfHeight || 600,
+            attrs.swfVersion || '10',
+            null,
+            scope.vars,
+            scope.params,
+            scope.attrs,
+            embedHandler);
         }, 0);
 
         if (scope.callbacks) {
