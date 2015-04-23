@@ -2,7 +2,7 @@ angular.module('swfobject', [])
   .factory('SwfObject', ['$window', function ($window) {
     return $window.swfobject;
   }])
-  .directive('swfObject', ['$window', '$timeout', 'SwfObject', function ($window, $timeout, SwfObject) {
+  .directive('swfObject', ['$window', '$timeout', '$interval', 'SwfObject', function ($window, $timeout, $interval, SwfObject) {
     'use strict';
 
     return {
@@ -12,12 +12,14 @@ angular.module('swfobject', [])
       scope: {
         params: '=swfParams',
         attrs: '=swfAttrs',
-        callbacks: '=swfCallbacks'
+        callbacks: '=swfCallbacks',
+        vars: '=?swfVars',
+        swfLoad: '&'
       },
 
       link: function link(scope, element, attrs) {
 
-        scope.id = attrs.swfId || 
+        scope.id = attrs.swfId ||
           // Random hash looking thing
           'swf-' + Math.floor(Math.random() * 1000000000000).toString(16);
 
@@ -28,9 +30,10 @@ angular.module('swfobject', [])
             attrs.swfHeight || 600,
             attrs.swfVersion || '10',
             null,
-            null,
+            scope.vars,
             scope.params,
-            scope.attrs);
+            scope.attrs,
+            embedHandler);
         }, 0);
 
         if (scope.callbacks) {
@@ -40,6 +43,42 @@ angular.module('swfobject', [])
           cbNames.forEach(function (cbName) {
             $window[cbName] = cbs[cbName];
           });
+        }
+
+
+        // http://learnswfobject.com/advanced-topics/executing-javascript-when-the-swf-has-finished-loading/
+        function swfLoadEvent(evt, fn) {
+          //This timeout ensures we don't try to access PercentLoaded too soon
+          $timeout(function () {
+            //Ensure Flash Player's PercentLoaded method is available and returns a value
+            if (typeof evt.ref.PercentLoaded !== "undefined" && evt.ref.PercentLoaded()) {
+              //Set up a timer to periodically check value of PercentLoaded
+              var loadCheckInterval = $interval(function () {
+                //Once value == 100 (fully loaded) we can do whatever we want
+                if (evt.ref.PercentLoaded() === 100) {
+                  //Clear interval
+                  $interval.cancel(loadCheckInterval);
+                  loadCheckInterval = null;
+                  //Execute function
+                  fn();
+                }
+              }, 1500);
+            }
+          }, 200);
+        }
+
+        //This function is invoked by SWFObject once the <object> has been created
+        function embedHandler(evt) {
+          //Only execute if SWFObject embed was successful
+          if (!evt.success || !evt.ref) {
+            return false;
+          }
+          if (scope.swfLoad) {
+            swfLoadEvent(evt, function () {
+              scope.swfLoad();
+            });
+          }
+
         }
       }
     };

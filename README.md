@@ -28,6 +28,25 @@ You can also add additional parameters:
   }"></swf-object>
 ```
 
+Specify flash vars:
+
+``` html
+<swf-object
+  swf-url="my-swf.swf"
+  swf-vars="{
+    user: 'alice'
+  }"></swf-object>
+```
+
+Register a callback for swf load complete:
+
+``` html
+<swf-object
+  swf-url="my-swf.swf"
+  swf-load="onLoadHandler()"
+  ></swf-object>
+```
+
 Also supports defining controller level callbacks if using `ExternalInterface` for example:
 
 **View**
