@@ -60,23 +60,21 @@ angular.module('swfobject', [])
                   $interval.cancel(loadCheckInterval);
                   loadCheckInterval = null;
                   //Execute function
-                  fn();
+                  fn({evt: evt});
                 }
               }, 1500);
             }
           }, 200);
         }
 
-        //This function is invoked by SWFObject once the <object> has been created
+        //a callback function that is called on both success or failure of creating a Flash plug-in <object> on the page (SWFObject 2.2+)
         function embedHandler(evt) {
-          //Only execute if SWFObject embed was successful
-          if (!evt.success || !evt.ref) {
-            return false;
-          }
-          if (scope.swfLoad) {
-            swfLoadEvent(evt, function () {
-              scope.swfLoad();
-            });
+          if (scope.swfLoad && typeof(scope.swfLoad) === "function") { // proceed if there are callback function
+            if (!evt.success || !evt.ref) { // if failure no reason to go and check if flash is 100% loaded 
+              scope.swfLoad({evt: evt});
+            }else{
+              swfLoadEvent(evt, scope.swfLoad);
+            }
           }
 
         }

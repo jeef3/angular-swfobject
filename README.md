@@ -39,11 +39,17 @@ Specify flash vars:
 ```
 
 Register a callback for swf load complete:
+  update :
+    callback can accept evt option as https://code.google.com/p/swfobject/wiki/api swfobject.embedSWF documentation
+                    callbackFn is a JavaScript function that has an event object as a parameter:
+                      success, Boolean to indicate whether the creation of a Flash plugin-in <object> DOM was successful or not
+                      id, String indicating the ID used in swfobject.registerObject
+                    ref, HTML object element reference (returns undefined when success=false)
 
 ``` html
 <swf-object
   swf-url="my-swf.swf"
-  swf-load="onLoadHandler()"
+  swf-load="onLoadHandler(evt)"
   ></swf-object>
 ```
 
