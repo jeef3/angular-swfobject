@@ -47,6 +47,16 @@ Register a callback for swf load complete:
   ></swf-object>
 ```
 
+###### http://learnswfobject.com/the-basics/adobes-express-install/
+Specify expressInstallSwfurl : 
+``` html
+<swf-object
+  swf-url="my-swf.swf"
+  <!--- optional expressInstall.swf packaged with swfobject -->
+  xi-swf-url-str="expressInstall.swf" 
+  ></swf-object>
+```
+
 Also supports defining controller level callbacks if using `ExternalInterface` for example:
 
 **View**
