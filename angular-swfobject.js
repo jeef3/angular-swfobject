@@ -14,6 +14,7 @@ angular.module('swfobject', [])
         attrs: '=swfAttrs',
         callbacks: '=swfCallbacks',
         vars: '=?swfVars',
+        expressInstallSwfurl:'=?xiSwfUrlStr',
         swfLoad: '&'
       },
 
@@ -29,7 +30,7 @@ angular.module('swfobject', [])
             attrs.swfWidth || 800,
             attrs.swfHeight || 600,
             attrs.swfVersion || '10',
-            null,
+            scope.expressInstallSwfurl,
             scope.vars,
             scope.params,
             scope.attrs,
