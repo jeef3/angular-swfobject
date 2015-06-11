@@ -67,7 +67,7 @@ angular.module('swfobject', [])
           }, 200);
         }
 
-        //a callback function that is called on both success or failure of creating a Flash plug-in <object> on the page (SWFObject 2.2+)
+        // https://code.google.com/p/swfobject/wiki/api
         function embedHandler(evt) {
           if (scope.swfLoad && typeof(scope.swfLoad) === "function") { // proceed if there are callback function
             if (!evt.success || !evt.ref) { // if failure no reason to go and check if flash is 100% loaded 
