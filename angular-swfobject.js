@@ -73,8 +73,7 @@ angular.module('swfobject', [])
             // if failure no reason to go and check if flash is 100% loaded 
             if (!evt.success || !evt.ref) {
               scope.swfLoad({evt: evt});
-            }
-            else{
+            } else {
               swfLoadEvent(evt, scope.swfLoad);
             }
           }
