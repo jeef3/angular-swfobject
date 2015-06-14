@@ -1,6 +1,6 @@
 {
   "name": "angular-swfobject",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": "Jeff Knaggs",
   "license": "MIT",
   "description": "SWFObject directive for AngularJS",
