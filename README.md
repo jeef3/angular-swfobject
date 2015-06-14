@@ -39,11 +39,12 @@ Specify flash vars:
 ```
 
 Register a callback for swf load complete:
+[check swfobject.embedSWF callback documentation](https://code.google.com/p/swfobject/wiki/api)
 
 ``` html
 <swf-object
   swf-url="my-swf.swf"
-  swf-load="onLoadHandler()"
+  swf-load="onLoadHandler(evt)"
   ></swf-object>
 ```
 

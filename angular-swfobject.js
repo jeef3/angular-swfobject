@@ -61,23 +61,22 @@ angular.module('swfobject', [])
                   $interval.cancel(loadCheckInterval);
                   loadCheckInterval = null;
                   //Execute function
-                  fn();
+                  fn({evt: evt});
                 }
               }, 1500);
             }
           }, 200);
         }
 
-        //This function is invoked by SWFObject once the <object> has been created
+        // https://code.google.com/p/swfobject/wiki/api
         function embedHandler(evt) {
-          //Only execute if SWFObject embed was successful
-          if (!evt.success || !evt.ref) {
-            return false;
-          }
-          if (scope.swfLoad) {
-            swfLoadEvent(evt, function () {
-              scope.swfLoad();
-            });
+          if (scope.swfLoad && typeof(scope.swfLoad) === "function") {
+            // if failure no reason to go and check if flash is 100% loaded 
+            if (!evt.success || !evt.ref) {
+              scope.swfLoad({evt: evt});
+            } else {
+              swfLoadEvent(evt, scope.swfLoad);
+            }
           }
 
         }
