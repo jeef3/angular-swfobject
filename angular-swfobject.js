@@ -49,12 +49,10 @@ angular.module('swfobject', [])
 
         // http://learnswfobject.com/advanced-topics/executing-javascript-when-the-swf-has-finished-loading/
         function swfLoadEvent(evt, fn) {
-          //This timeout ensures we don't try to access PercentLoaded too soon
-          $timeout(function () {
-            //Ensure Flash Player's PercentLoaded method is available and returns a value
-            if (typeof evt.ref.PercentLoaded !== "undefined" && evt.ref.PercentLoaded()) {
-              //Set up a timer to periodically check value of PercentLoaded
-              var loadCheckInterval = $interval(function () {
+            //Set up a timer to periodically check value of PercentLoaded
+            var loadCheckInterval = $interval(function () {
+              //Ensure Flash Player's PercentLoaded method is available and returns a value
+              if (typeof evt.ref.PercentLoaded !== "undefined" && evt.ref.PercentLoaded()) {
                 //Once value == 100 (fully loaded) we can do whatever we want
                 if (evt.ref.PercentLoaded() === 100) {
                   //Clear interval
@@ -63,9 +61,8 @@ angular.module('swfobject', [])
                   //Execute function
                   fn({evt: evt});
                 }
-              }, 1500);
-            }
-          }, 200);
+              }
+            }, 200);
         }
 
         // https://code.google.com/p/swfobject/wiki/api
