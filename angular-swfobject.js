@@ -46,23 +46,37 @@ angular.module('swfobject', [])
           });
         }
 
-
         // http://learnswfobject.com/advanced-topics/executing-javascript-when-the-swf-has-finished-loading/
         function swfLoadEvent(evt, fn) {
-            //Set up a timer to periodically check value of PercentLoaded
-            var loadCheckInterval = $interval(function () {
-              //Ensure Flash Player's PercentLoaded method is available and returns a value
-              if (typeof evt.ref.PercentLoaded !== "undefined" && evt.ref.PercentLoaded()) {
-                //Once value == 100 (fully loaded) we can do whatever we want
-                if (evt.ref.PercentLoaded() === 100) {
-                  //Clear interval
-                  $interval.cancel(loadCheckInterval);
-                  loadCheckInterval = null;
-                  //Execute function
-                  fn({evt: evt});
+            //This interval ensures we don't try to access PercentLoaded too soon
+            var startCheckInterval = $interval(function () {
+                //Ensure Flash Player's PercentLoaded method is available
+                if (typeof evt.ref.PercentLoaded !== 'undefined') {
+                    $interval.cancel(startCheckInterval);
+                    startCheckInterval = null;
+                    // If percent loaded returns immediately, callback now
+                    if (evt.ref.PercentLoaded() === 100) {
+                        onLoaded();
+                        return;
+                    }
+                    // Otherwise, set up a timer to periodically check value of PercentLoaded
+                    var loadCheckInterval = $interval(function () {
+                        //Once value == 100 (fully loaded) we can do whatever we want
+                        if (typeof evt.ref.PercentLoaded !== 'function' ||
+                            evt.ref.PercentLoaded() === 100) {
+                            $interval.cancel(loadCheckInterval);
+                            loadCheckInterval = null;
+                            onLoaded();
+                            return;
+                        }
+                    }, 500);
                 }
-              }
-            }, 200);
+            }, 100);
+
+            function onLoaded() {
+                setFocusOnFlash();
+                fn({evt: evt});
+            }
         }
 
         // https://code.google.com/p/swfobject/wiki/api
