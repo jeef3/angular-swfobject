@@ -77,6 +77,13 @@ angular.module('swfobject', [])
           }
 
         }
+        
+        function setFocusOnFlash() {
+            var fl = $window.swfobject.getObjectById(scope.id);
+            if (!!fl) {
+                fl.focus();
+            }
+        }
       }
     };
   }]);
