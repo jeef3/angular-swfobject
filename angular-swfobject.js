@@ -37,13 +37,12 @@ angular.module('swfobject', [])
             embedHandler);
         }, 0);
 
-        if (scope.callbacks) {
-          var cbs = scope.callbacks;
-          var cbNames = Object.keys(cbs);
-
-          cbNames.forEach(function (cbName) {
-            $window[cbName] = cbs[cbName];
-          });
+        
+        // Callbacks to be invoked from AS3 ExternalInterface set on `window`
+        if (!!scope.callbacks) {
+             Object.keys(scope.callbacks).forEach(function (cbName) {
+                $window[cbName] = scope.callbacks[cbName];
+            });
         }
 
 
